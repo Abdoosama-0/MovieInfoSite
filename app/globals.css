@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+::-webkit-scrollbar { /* الخلفية */
+  background: rgb(202, 236, 236);
+  height: 13px; 
+  width: 12px;
+ 
+}
+
+::-webkit-scrollbar-thumb {/* البار نفسه */
+  background: rgb(108, 188, 222);
+
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
