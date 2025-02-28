@@ -1,8 +1,9 @@
-
+"use client"
 import { button, div, h1 } from 'framer-motion/client';
 import Lottie from 'lottie-react';
 import {  Search } from 'lucide-react'
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 
@@ -35,8 +36,11 @@ import React, { useEffect, useState } from 'react'
       //===========================================================
       fetchMovies();
     }, []);
+    const pathname = usePathname();
 
-
+    useEffect(() => {
+      setSearchValue(""); // إعادة تعيين القيمة عند تغيير الـ URL
+    }, [pathname]); // يتم تنفيذ `useEffect` عند تغيير `as
 
 
 
