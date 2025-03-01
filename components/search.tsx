@@ -1,6 +1,7 @@
 "use client"
 
 import {  Search } from 'lucide-react'
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -13,7 +14,14 @@ import React, { useEffect, useState } from 'react'
   
     const numberOfPages = 500;
     const [loading,setLoading]=useState<boolean>(true)
-    const [data, setData] = useState<any[]>([]);
+    
+    interface Movie {
+      id: number;
+      title: string;
+      poster_path: string;
+    }
+    
+    const [data, setData] = useState<Movie[]>([]);
  
     useEffect(() => {
         //================================================================================================
@@ -103,7 +111,11 @@ const filteredWords = filteredWords1.slice(0,4)
                                                     onClick={() => {setOnSearch(false) ; setSearchValue("")}}
                                                     className='rounded-sm p-2 m-1  border-b-4 cursor-pointer mb-2 hover:bg-slate-500 hover:bg-opacity-50'>
                                                         <div className='flex flex-row space-x-3  '>
-                                                        <img src={`https://image.tmdb.org/t/p/w500/${result.poster_path}`} alt={result.title} className=" h-[6rem] rounded-lg object-cover" />
+                                                          
+
+                                                        <Image src={`https://image.tmdb.org/t/p/w500/${result.poster_path}`} alt={result.title}
+                                                         height={96} width={64} className=" rounded-lg object-cover" />
+
                                                         <h1 className='font-bold text-3xl flex items-end'>{result.title}</h1>
                                                         </div>
                                                        

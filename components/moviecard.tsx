@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
+import Image from 'next/image';
 interface MovieCardProps {
     image: string;
     title: string;
@@ -14,7 +15,15 @@ const MovieCard = ({ image, title, quality,id }: MovieCardProps) => {
        <Link href={`/movies/${id}`}>
         <div className="relative w-64 rounded-lg m-2 overflow-hidden group cursor-pointer">
         {/* الصورة */}
-        <img src={image} alt={title} className="w-full h-96 object-cover" />
+        <div className="relative w-full h-96">
+          <Image 
+            src={image} 
+            alt={title} 
+            fill 
+            className="object-cover" 
+          />
+      </div>
+
       
         {/* تأثير الـ hover عبر before */}
         <div className="absolute inset-0 bg-sky-950 z-[5] opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>

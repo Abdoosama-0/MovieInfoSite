@@ -6,7 +6,7 @@ import animationData from "@/animations/Animation - 1740505373902.json";
 import { Speech, Star } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react'
-
+import Image from 'next/image';
 
 
 export default function Movie() {
@@ -92,7 +92,7 @@ const [movie, setMovie] = useState<Movie | null>(null);
 
             <div className='relative p-3 flex flex-row  border-b-2   '>{/**معلومات عن الفيلم container*/}
                     <div className='flex flex-col '> 
-                        <img src={`https://image.tmdb.org/t/p/w500/${movie && movie.poster_path}`} alt={"movie"}  className="w-[24rem] h-[33rem] object-cover rounded-2xl mr-5 mb-3" /> {/**الصورة */}
+                        <Image src={`https://image.tmdb.org/t/p/w500/${movie && movie.poster_path}`} alt={"movie"} width={380} height={552}  className="object-cover rounded-2xl mr-5 mb-3 mt-5" /> {/**الصورة */}
                         <div className='flex flex-row space-x-2 justify-around mb-4 ml-3  '>
                             <div className='rounded-2xl bg-yellow-600    flex flex-col justify-center px-4 py-3 w-fit font-bold  '>
                                   <div className='flex flex-row items-center space-x-1'>

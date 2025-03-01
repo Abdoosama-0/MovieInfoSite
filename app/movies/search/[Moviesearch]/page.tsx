@@ -37,7 +37,7 @@ const Page = () => {
 
         })
 
-   },[])
+   },[search])
 
    const results=movies
   const exiecit= results.length>0
