@@ -1,5 +1,5 @@
 
-"use client"
+
 
 import TopMovies from "@/components/topmovies";
 import NowPlaying from "@/components/nowPlaying";
