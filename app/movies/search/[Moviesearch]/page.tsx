@@ -1,7 +1,5 @@
 "use client"
 import MovieCard from "@/components/moviecard";
-import Moviecard from "@/components/moviecard";
-import { div, h1 } from "framer-motion/client";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from 'react'
 
@@ -11,7 +9,7 @@ interface Movie {
   title: string;
 }
 
-type MovieData = Movie[]; // الآن MovieData هو مجرد مصفوفة من الأفلام
+type MovieData = Movie[]; 
 
 const Page = () => {
   
@@ -59,12 +57,13 @@ const Page = () => {
           { 
           
           results.map((result)=>(
+            <span key={result.id}>
              <MovieCard
              image={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
              title={result.title}
              id={result.id}
              />
-
+</span>
           ))}
           </div>
         ):(

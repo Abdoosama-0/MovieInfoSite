@@ -1,7 +1,7 @@
 "use client"
 
 
-import { useState, useEffect, createContext, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from "next/navigation";
 import MovieCard from './moviecard';
 
@@ -67,15 +67,15 @@ export default function TopMovies()  {
         <div className='flex  flex-row   flex-wrap '>{/** movies*/}{/**h-[100rem]  */}
         {loading? (<h1 className="text-white font-bold text-4xl  mx-auto mt-5 h-[100rem]">loading...</h1>):(       
            <div className='flex flex-row   h-fit  mt-2 flex-wrap ' >
-            {data && data.results.map((movie) => (//.slice(0,6)
-                       
+            {data && data.results.map((movie,index) => (//.slice(0,6)
+                     <span key={index}>
             <MovieCard
                     image={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                     title={movie.title}
                     quality="1080p WEB-D"   
                     id={movie.id} 
             />
-          
+          </span>  
             ))}
             </div> 
 

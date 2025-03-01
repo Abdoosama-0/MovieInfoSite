@@ -1,6 +1,5 @@
 "use client"
-import { button, div, h1 } from 'framer-motion/client';
-import Lottie from 'lottie-react';
+
 import {  Search } from 'lucide-react'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -97,9 +96,9 @@ const filteredWords = filteredWords1.slice(0,4)
                                       <h1 className=' mb-2 ml-1'> Popular Results</h1>
                                       
                                         <div className=' '>
-                                        {filteredWords.map((result) => (
+                                        {filteredWords.map((result ,index) => (
                                                    
-                                                <Link  href={`/movies/${result.id}`} >
+                                                <Link key={index} href={`/movies/${result.id}`} >
                                                     <div 
                                                     onClick={() => {setOnSearch(false) ; setSearchValue("")}}
                                                     className='rounded-sm p-2 m-1  border-b-4 cursor-pointer mb-2 hover:bg-slate-500 hover:bg-opacity-50'>

@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import MovieCard from "./moviecard";
-import { h1 } from "framer-motion/client";
+
 
 
 //=================================================================================================
@@ -51,7 +51,7 @@ const movies =data.results
   
 // دالة لجلب العناصر الحالية مع إعادة التدوير
 const getVisibleMovies = () => {
-  let endIndex = startIndex + visibleItems;
+  const endIndex = startIndex + visibleItems;
 
   return endIndex <= movies.length
     ? movies.slice(startIndex, endIndex) // الحالة العادية
@@ -92,12 +92,14 @@ return (
 
         <button onClick={handlePrevious} className="text-white">◀</button>
         
-      {getVisibleMovies().map((result)=>(//0 to 6  => 0 1 2 3 4 5 =>6 items >>>>>> 6 ,12 =>  6 7 8  9 10 11 
+      {getVisibleMovies().map((result,index)=>(//0 to 6  => 0 1 2 3 4 5 =>6 items >>>>>> 6 ,12 =>  6 7 8  9 10 11 
+      <span key={index}>
                  <MovieCard
                  image={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
                  title={result.title}
                  id={result.id}
                  />
+                 </span>
               )
       )}
       <button onClick={handleNext} className="text-white">▶</button>

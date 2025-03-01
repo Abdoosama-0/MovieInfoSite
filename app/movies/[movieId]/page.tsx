@@ -7,14 +7,19 @@ import { Speech, Star } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react'
 
+
+
 export default function Movie() {
+  useEffect(() => {
+    window.scrollTo(0, 0); // يرجّع الصفحة للأعلى عند الدخول
+  }, []);
 
     const { movieId } = useParams();
  
 const [loading, setLoading] = useState(true);
-const [videoLoading, setVideoLoading] = useState(true);
+
 //=========================================================
-const targetRef = useRef<HTMLDivElement>(null);
+const targetRef = useRef<HTMLIFrameElement | null>(null);
 
 const scrollToSection = () => {
   targetRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -81,17 +86,13 @@ const [movie, setMovie] = useState<Movie | null>(null);
       
       
         <main className="relative h-screen ">
-               {/**=====================background======================= */}
-              {/* <div
-        className="fixed inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url('/1315629.png')` }}
-      /> */}
+  
        {/**======================movie page====================== */}
         <div className=" relative inset-0 flex flex-col    p-4 bg-slate-700 bg-opacity-85 overflow-y-auto   " > {/** المحتوى فوق الصورة */}
 
             <div className='relative p-3 flex flex-row  border-b-2   '>{/**معلومات عن الفيلم container*/}
                     <div className='flex flex-col '> 
-                        <img src={`https://image.tmdb.org/t/p/w500/${movie && movie.poster_path}`} alt={"movie"} className="w-[24rem] h-[33rem] object-cover rounded-2xl mr-5 mb-3" /> {/**الصورة */}
+                        <img src={`https://image.tmdb.org/t/p/w500/${movie && movie.poster_path}`} alt={"movie"}  className="w-[24rem] h-[33rem] object-cover rounded-2xl mr-5 mb-3" /> {/**الصورة */}
                         <div className='flex flex-row space-x-2 justify-around mb-4 ml-3  '>
                             <div className='rounded-2xl bg-yellow-600    flex flex-col justify-center px-4 py-3 w-fit font-bold  '>
                                   <div className='flex flex-row items-center space-x-1'>
@@ -123,10 +124,20 @@ const [movie, setMovie] = useState<Movie | null>(null);
                           </div>
                         </div>
 
-                        <div className="flex flex-row space-x-2 items-end   mb-3  ">
-                          <h1 className="text-4xl" >Genres:</h1>  
-                        <h1  className="text-2xl">{movie?.genres.map((genre) => genre.name).join(", ")}</h1>
-                        </div>
+                              <div className="flex flex-row space-x-2 items-end   mb-3  ">
+                                <h1 className="text-4xl" >Genres:</h1>  
+                                
+                              <h1  className="text-2xl">{movie?.genres.map((genre,index) =>
+                           
+                            <span key={index}>
+                              {genre.name}{index < movie.genres.length - 1 ? ", " : ""}
+                                </span>
+                            
+                                
+                                )}
+                                
+                                </h1>
+                              </div>
 
 
                           <div className='flex flex-col mb-3'>
