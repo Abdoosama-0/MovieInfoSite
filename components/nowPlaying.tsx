@@ -3,7 +3,6 @@
 
 import React, { useEffect, useState } from "react";
 import MovieCard from "./moviecard";
-import { div } from "framer-motion/client";
 
 
 
