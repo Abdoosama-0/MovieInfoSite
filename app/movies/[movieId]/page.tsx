@@ -85,17 +85,31 @@ const [movie, setMovie] = useState<Movie | null>(null);
     ): (
       
       
-        <main className="relative h-screen ">
+        <main className="relative  flex flex-col bg-slate-500 bg-opacity-50 ">
   
        {/**======================movie page====================== */}
-        <div className=" relative inset-0 flex flex-col    p-4 bg-slate-700 bg-opacity-85 overflow-y-auto   " > {/** المحتوى فوق الصورة */}
+   
 
-            <div className='relative p-3 flex flex-row  border-b-2   '>{/**معلومات عن الفيلم container*/}
-                    <div className='flex flex-col '> 
-                        <Image src={`https://image.tmdb.org/t/p/w500/${movie && movie.poster_path}`} alt={"movie"} width={380} height={552}  className="object-cover rounded-2xl mr-5 mb-3 mt-5" /> {/**الصورة */}
-                        <div className='flex flex-row space-x-2 justify-around mb-4 ml-3  '>
-                            <div className='rounded-2xl bg-yellow-600    flex flex-col justify-center px-4 py-3 w-fit font-bold  '>
-                                  <div className='flex flex-row items-center space-x-1'>
+            <div className='relative p-3  flex flex-col xl:flex-row  border-b-2  '>{/**معلومات عن الفيلم container*/}
+
+                    <div className='flex flex-col p-2 gap-2  h-[44rem] mx-auto w-full max-w-[25rem] xl:mx-0 xl:h-[44rem] xl:w-full xl:max-h-[44rem] '> {/** اصورة والتقيم*/}
+
+                    <div className="w-full h-full  xl:w-full xl:h-full   relative rounded-lg overflow-hidden ">
+                          <Image
+                            src={`https://image.tmdb.org/t/p/w500/${movie && movie.poster_path}`} // تأكد من أن الصورة موجودة في المجلد public 
+                            alt="movie"
+                            layout="fill" // يجعل الصورة تملأ الـ div بالكامل
+                            objectFit="cover"// يحافظ على تناسب الصورة ويملأ الحاوية
+                            className="object-cover " 
+                          />
+                    </div>
+                      
+                       
+                       
+                        <div className='flex flex-row justify-around w-full gap-1 max-w-full '>
+                             
+                            <div className='rounded-2xl bg-yellow-600    flex flex-col justify-center px-4 py-3 w-full font-bold  '>
+                                  <div className='flex flex-row items-center space-x-1 w-full'>
                                       <h1 className='text-4xl '>imdb </h1> <h1 className='text-3xl items-end'>{movie &&movie.vote_average.toFixed(1)}  </h1> <h1><Star fill="black" color="black" size={40} /></h1>
                                      
                                   </div>
@@ -108,13 +122,16 @@ const [movie, setMovie] = useState<Movie | null>(null);
               
                                   </div>
                             </div>
-                              <div className='bg-slate-950  py-4 px-6 rounded-2xl flex flex-col justify-center hover:bg-slate-800 hover:bg-opacity-50 cursor-pointer '>
-                                <h1 onClick={scrollToSection} className='text-3xl text-white font-serif'>trailer</h1>
+                              <div className='bg-slate-950  py-4 px-6 rounded-2xl flex flex-col justify-center w-full hover:bg-slate-800 hover:bg-opacity-50 cursor-pointer '>
+                                <h1 onClick={scrollToSection} className='text-3xl text-white w-fit font-serif'>trailer</h1>
                               </div>
                           
                         </div>
                     </div> 
-                  <div className='flex flex-col p-3 text-white    '> {/**المعلومات */}
+
+
+
+                  <div className='flex flex-col p-3 text-white xl:overflow-x-auto    '> {/**المعلومات */}
                        
 
                         <div className="flex items-center space-x-3 border-b-4 w-fit rounded-sm p-2 mb-2">
@@ -142,17 +159,17 @@ const [movie, setMovie] = useState<Movie | null>(null);
 
                           <div className='flex flex-col mb-3'>
                               <h1 className="text-3xl mb-2" >overview:</h1>
-                              <div className='text-2xl  bg-gray-950 bg-opacity-30 p-4 rounded-2xl border-3 border-gray-500'>
+                              <div className='text-2xl flex flex-wrap bg-gray-950 bg-opacity-30 p-4 rounded-2xl'>
                               {movie?.overview}
                               </div>
                           </div>
 
-                          <div className='flex flex-col mb-3 '>
-                            <h1 className="text-3xl mb-4 mt-4">cast:</h1>
-                            <div className=' bg-gray-950 bg-opacity-30 p-4 rounded-2xl border-3 border-gray-500'>
-                                          <div className="flex flex-wrap  gap-9">
+                          <div className='flex flex-col mb-3  w-full xl:overflow-x-auto'>
+                            <h1 className="text-3xl mb-4 mt-4 w-fit ">cast:</h1>
+                            <div className=' bg-slate-950 bg-opacity-30 p-4 rounded-2xl  flex flex-row gap-5  w-full flex-wrap xl:flex-nowrap  xl:overflow-x-auto'> 
+                                          
                                               {cast.map((actor) => (
-                                                <div key={actor.id} className="w-32 text-center">
+                                                <div key={actor.id} className=" w-fit min-w-12 text-center ">
                                                   <img
                                                     src={
                                                       actor.profile_path
@@ -160,14 +177,17 @@ const [movie, setMovie] = useState<Movie | null>(null);
                                                         : "/placeholder.jpg"
                                                     }
                                                     alt={actor.name}
-                                                    className="w-24 h-24 object-cover rounded-full mx-auto mb-2"
+                                                    className="w-fit h-24 object-cover rounded-full mx-auto mb-2"
                                                   />
-                                                  <p className="text-white text-sm mb-1">{actor.name}</p>
-                                                  <p className="text-gray-300 text-xs border-2 rounded-full mb-4 p-1">as {actor.character}</p>
-                                            </div> ))}
+                                                  <p className="text-white text-sm w-full mb-1">{actor.name}</p>
+                                                  <p className="text-gray-300 text-xs w-full border-2 rounded-full mb-4 p-1">as {actor.character}</p>
+                                            </div> 
+                                          
+                                          
+                                                ))}
                                                     
-                          </div>
-                              </div>
+                                         
+                              </div> 
                           </div>
 
                   </div>
@@ -178,18 +198,19 @@ const [movie, setMovie] = useState<Movie | null>(null);
             </div>
 
 
-            <div  className="flex flex-col  mt-4  mb-8 ">  {/**video container*/}
+            <div  className="flex flex-col  mt-4  mb-8  mx-4 ">  {/**video container*/}
               <h1 className="text-3xl text-cyan-50   w-fit mb-4">Trailer:</h1>
 
-              <div className="relative flex justify-center items-center  mx-auto w-[1400px] h-[700px] rounded-xl bg-black overflow-hidden">
-                  <h1 className='absolute  font-bold z-10 text-3xl text-white'> loading.....</h1>
-                  <iframe className="absolute  z-20 w-full h-full  " ref={targetRef}
-                  
-                    src={`https://www.youtube.com/embed/${trailerKey}`}
-                    allowFullScreen
-                    
-                  ></iframe>
-              </div>
+              <div className="relative flex justify-center items-center mx-auto w-full max-w-[1400px] aspect-[16/9] rounded-xl bg-black overflow-hidden">
+                <h1 className='absolute font-bold z-10 text-3xl text-white'>loading.....</h1>
+                <iframe
+                  className="absolute z-20 w-full h-full"
+                  ref={targetRef}
+                  src={`https://www.youtube.com/embed/${trailerKey}`}
+                  allowFullScreen
+                ></iframe>
+            </div>
+
             </div>
 
 
@@ -198,7 +219,7 @@ const [movie, setMovie] = useState<Movie | null>(null);
           
 
            
-        </div>
+     
 
         {/**============================================ */}
 

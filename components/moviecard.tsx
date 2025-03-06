@@ -15,16 +15,17 @@ const MovieCard = ({ image, title, quality,id }: MovieCardProps) => {
    
         
        <Link href={`/movies/${id}`}>
-        <div className="relative w-64 rounded-lg m-2 overflow-hidden group cursor-pointer">
+        <div className="relative   overflow-hidden group cursor-pointer  w-full 
+        aspect-[2/3] bg-slate-950 rounded-2xl ">
         {/* الصورة */}
-        <div className="relative w-full h-96">
+        <div className="relative w-full h-full">
           <Image 
             src={image} 
             alt={title} 
             fill 
             className="object-cover" 
           />
-      </div>
+          </div>
 
       
         {/* تأثير الـ hover عبر before */}
@@ -38,11 +39,11 @@ const MovieCard = ({ image, title, quality,id }: MovieCardProps) => {
        )}
     
        {/* اسم الفيلم */}
-       <div className="absolute bottom-0 w-full z-10 bg-black bg-opacity-80 text-white text-center text-sm p-2">
+       <div className="absolute bottom-0 w-full z-10 bg-black bg-opacity-80 h-fit text-white text-center text-sm p-2">
          {title}
        </div>
       </div>
-      </Link>
+       </Link>
       );
     };
     

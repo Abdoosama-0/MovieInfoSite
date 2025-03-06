@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import MovieCard from "./moviecard";
+import { div } from "framer-motion/client";
 
 
 
@@ -78,6 +79,28 @@ useEffect(() => {
 
 //=================================================================================================
 
+
+const [itemsPerPage, setItemsPerPage] = useState(2);
+
+useEffect(() => {
+  const updateItemsPerPage = () => {
+    if (window.innerWidth >= 1024) {
+      setItemsPerPage(6); // شاشات كبيرة
+    } else if (window.innerWidth >= 768) {
+      setItemsPerPage(3); // شاشات متوسطة
+    } else {
+      setItemsPerPage(2); // شاشات صغيرة
+    }
+  };
+
+  updateItemsPerPage(); // تشغيل عند التحميل
+  window.addEventListener("resize", updateItemsPerPage);
+
+  return () => window.removeEventListener("resize", updateItemsPerPage);
+}, []);
+
+
+
 return (
 
 
@@ -88,24 +111,28 @@ return (
 
   
     {loading? (<h1 className="text-white font-bold text-4xl mx-auto p-40">loading...</h1>):(
-    <div className="flex space-x-3 justify-center    mb-4  h-fit">
+      <div className="flex flex-row gap-1 w-full justify-between items-center"> 
+          <button onClick={handlePrevious} className="text-white  h-full">◀</button>
+      
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 justify-center w-full   mb-4  h-fit">
 
-        <button onClick={handlePrevious} className="text-white">◀</button>
-        
-      {getVisibleMovies().map((result,index)=>(//0 to 6  => 0 1 2 3 4 5 =>6 items >>>>>> 6 ,12 =>  6 7 8  9 10 11 
-      <span key={index}>
-                 <MovieCard
-                 image={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
-                 title={result.title}
-                 id={result.id}
-                 />
-                 </span>
-              )
-      )}
-      <button onClick={handleNext} className="text-white">▶</button>
+            
+              
+            {getVisibleMovies().slice(0,itemsPerPage).map((result,index)=>(//0 to 6  => 0 1 2 3 4 5 =>6 items >>>>>> 6 ,12 =>  6 7 8  9 10 11 
+            <span key={index}>
+                      <MovieCard
+                      image={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
+                      title={result.title}
+                      id={result.id}
+                      />
+                      </span>
+                    )
+            )}  
+        </div>
+
+      <button onClick={handleNext} className="text-white  h-full ">▶</button>
     
-
-    </div>
+      </div>
   )}
     
     </div>

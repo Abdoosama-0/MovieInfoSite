@@ -15,7 +15,7 @@ export default function Home() {
 
  
  //====================background===========================
-    <main className="relative h-screen">
+    <main className="relative ">
     
 {/**==========content================================================= */}
      

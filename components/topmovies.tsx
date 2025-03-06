@@ -61,18 +61,23 @@ export default function TopMovies() {
 
   return (
     <div ref={targetRef} className="flex justify-center">
-      <div className="border-4 rounded-2xl p-3 bg-slate-500 bg-opacity-50 w-[95%]">
+      <div className="border-4 rounded-2xl p-3 bg-slate-500 bg-opacity-50 w-[100%]">
         <div className="flex border-b-4 text-4xl font-serif text-white p-2 shadow-lg">Best Movies</div>
 
         <Suspense fallback={<div className="text-white font-bold text-4xl mx-auto mt-5">Loading...</div>}>
           <SearchParamsHandler onPageChange={setPage} />
         </Suspense>
 
-        <div className="flex flex-row flex-wrap">
+        {/* <div className="flex flex-row flex-wrap bg-orange-500 m-2"> */}
           {loading ? (
-            <h1 className="text-white font-bold text-4xl mx-auto mt-5 h-[100rem]">loading...</h1>
+
+            <h1 className="text-white font-bold text-4xl mx-auto mt-5 h-[100rem] ">loading...</h1>
+
           ) : (
-            <div className="flex flex-row h-fit mt-2 flex-wrap">
+            <div className=" m-2 flex-wrap
+            grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3"> {/**movies */}
+   
+
               {data &&
                 data.results.map((movie, index) => (
                   <span key={index}>
@@ -86,12 +91,12 @@ export default function TopMovies() {
                 ))}
             </div>
           )}
-        </div>
+        {/* </div> */}
 
-        <div className="flex flex-row justify-center space-x-2 mt-4">
+        <div className="flex flex-row justify-center  w-[80%] md:w-fit mx-auto p-4   space-x-2 mt-4 mb-8 text-white font-bold text-xl">
           {page > 1 && (
-            <button
-              className="bg-black hover:bg-gray-800 hover:bg-opacity-50 w-2/12 rounded-xl mb-8 h-8 text-white"
+            <button 
+              className="bg-black hover:bg-gray-800 hover:bg-opacity-50 w-full p-1 px-5  rounded-xl  "
               onClick={() => {
                 changePage(page - 1);
                 scrollToSection();
@@ -101,7 +106,7 @@ export default function TopMovies() {
             </button>
           )}
           <button
-            className="bg-black hover:bg-gray-800 hover:bg-opacity-50 w-2/12 rounded-xl mb-8 h-8 text-white"
+            className="bg-black hover:bg-gray-800 hover:bg-opacity-50 w-full p-1 px-5   rounded-xl   "
             onClick={() => {
               changePage(page + 1);
               scrollToSection();

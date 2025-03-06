@@ -52,21 +52,26 @@ const Page = () => {
 </div>
 ):( 
   exiecit ? (
-            <div className="flex flex-row  p-2  rounded-2xl  flex-wrap" >
 
-          { 
-          
-          results.map((result)=>(
-            <span key={result.id}>
-             <MovieCard
-             image={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
-             title={result.title}
-             id={result.id}
-             />
-</span>
-          ))}
+            <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7
+             gap-3  p-2  rounded-2xl  flex-wrap" >
+
+                        { 
+                        
+                        results.map((result)=>(
+                          <span key={result.id}>
+                          <MovieCard
+                          image={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
+                          title={result.title}
+                          id={result.id}
+                          />
+              </span>
+                        ))}
           </div>
-        ):(
+        )
+        
+        
+        :(
           <div className="flex flex-row  p-2  rounded-2xl justify-center items-center  flex-wrap">
 <h1 className='h-[20rem] text-5xl text-white p-2   mb-3'>no results</h1>
 </div>

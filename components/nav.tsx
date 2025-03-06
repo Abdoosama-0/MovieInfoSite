@@ -5,10 +5,13 @@ import Searchy from './search'
 
 const Nav  = () => {
   return (
-  <nav className="sticky    z-[9999]  bg-slate-900 flex flex-row justify-between w-full items-center p-2 h-[5rem]">
+  <nav className="sticky    z-[9999]  bg-slate-900 flex flex-row justify-around w-full  items-center p-2  flex-wrap">
 
-    <Link href={`/`}><h1 className='font-[Fantasy]  text-white text-4xl mx-20' >MovieLovers</h1></Link>
+    <Link href={`/`}><h1 className='font-[Fantasy]    text-white text-4xl ' >MovieLovers</h1></Link>
+  
+
     <Searchy/>
+ 
   
 </nav>
 )
