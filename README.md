@@ -1,4 +1,4 @@
-# Movie-Website
+# MovieInfoSite
 
 🔹A movie platform where users can search for titles, view detailed information and user ratings, with
 real-time average score calculation.  
