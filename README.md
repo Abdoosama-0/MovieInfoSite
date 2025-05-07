@@ -1,27 +1,28 @@
 # Movie-Website
 
-A fully responsive Home page of a movie website, responsive for all devices, built using **HTML**, **CSS**, and **JavaScript**.
+🔹A movie platform where users can search for titles, view detailed information and user ratings, with
+real-time average score calculation.  
+🔹mplemented advanced filtering, intuitive search functionality, and a responsive, user-friendly UI.  
+🔹built using **Next.js**, **TypeScript**,  **Tailwind CSS**, and **React**.
 ## 🔗 Live Site
 
 👉 [Click here to view the live site](https://movie-lovers-site-cvmd.vercel.app/)
 ## Demo Screenshots
 
-![Demo Screenshot](https://i.imgur.com/A0iRfsn.png)
-
+![Demo Screenshot](https://i.imgur.com/A0iRfsn.png)  
+![Demo Screenshot](https://i.imgur.com/063Mk8N.png)  
+![Demo Screenshot](https://i.imgur.com/oFR2im2.png)  
+![Demo Screenshot](https://i.imgur.com/4Bsbvu9.png)  
 ---
 ## Features
 - Fully Responsive Design
 - Clean and Modern UI
-- Built with HTML, CSS, and JavaScript
-- Includes movie genres, series, and a sign-in page
+- contains a large collection of movies and details about them, such as rating, cast, and trailer.
 
 ## Technologies Used
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
+-  Next.js
+- TypeScript
+- Tailwind CSS
+- React
 
-## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/movie-website.git
