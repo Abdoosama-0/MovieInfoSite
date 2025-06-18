@@ -71,9 +71,10 @@ export default function TopMovies() {
         {/* <div className="flex flex-row flex-wrap bg-orange-500 m-2"> */}
           {loading ? (
 
-            <h1 className="text-white font-bold text-4xl mx-auto mt-5 h-[100rem] ">loading...</h1>
+            <div className="loader mx-auto m-10"></div>
 
           ) : (
+            <>
             <div className=" m-2 flex-wrap
             grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3"> {/**movies */}
    
@@ -90,10 +91,7 @@ export default function TopMovies() {
                   </span>
                 ))}
             </div>
-          )}
-        {/* </div> */}
-
-        <div className="flex flex-row justify-center  w-[80%] md:w-fit mx-auto p-4   space-x-2 mt-4 mb-8 text-white font-bold text-xl">
+  <div className="flex flex-row justify-center  w-[80%] md:w-fit mx-auto p-4   space-x-2 mt-4 mb-8 text-white font-bold text-xl">
           {page > 1 && (
             <button 
               className="bg-black hover:bg-gray-800 hover:bg-opacity-50 w-full p-1 px-5  rounded-xl  "
@@ -115,6 +113,11 @@ export default function TopMovies() {
             Next
           </button>
         </div>
+            </>
+          )}
+        {/* </div> */}
+
+      
       </div>
     </div>
   );

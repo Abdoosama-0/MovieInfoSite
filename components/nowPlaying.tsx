@@ -109,7 +109,7 @@ return (
       <h1 className="text-white font-bold text-4xl border-b-4 p-2 ml-4 ">now playing</h1>
 
   
-    {loading? (<h1 className="text-white font-bold text-4xl mx-auto p-40">loading...</h1>):(
+    {loading? ( <div className="loader mx-auto m-10"></div>):(
       <div className="flex flex-row gap-1 w-full justify-between items-center"> 
           <button onClick={handlePrevious} className="text-white  h-full">◀</button>
       
