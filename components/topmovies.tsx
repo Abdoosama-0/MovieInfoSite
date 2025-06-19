@@ -41,12 +41,13 @@ export default function TopMovies() {
 
   const changePage = (newPage: number) => {
     router.push(`?page=${newPage}`, { scroll: false });
-    setData(null); 
+   
+    // setLoading(true);
   
   };
 
-  useEffect(() => {
-    fetch(
+  const fetchMovies = async (page: number) => {
+     fetch(
       `https://api.themoviedb.org/3/movie/top_rated?api_key=caa8300bc818e7643ea53ed6f19509f7&language=en-US&page=${page}`
     )
       .then((res) => res.json())
@@ -54,7 +55,16 @@ export default function TopMovies() {
         setData(data);
         setLoading(false);
       });
-  }, [page]);
+
+  }
+
+useEffect(() => {
+  setLoading(true);
+
+    fetchMovies(page);
+
+
+}, [page]);
 
   const scrollToSection = () => {
     targetRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -62,7 +72,7 @@ export default function TopMovies() {
 
   return (
     <div ref={targetRef} className="flex justify-center">
-      <div className="border-4 rounded-2xl p-3 bg-slate-500 bg-opacity-50 w-[100%]">
+      <div className="min-h-screen border-4 rounded-2xl p-3 bg-slate-500 bg-opacity-50 w-[100%]">
         <div className="flex border-b-4 text-4xl font-serif text-white p-2 shadow-lg">Best Movies</div>
 
         <Suspense fallback={<div className="text-white font-bold text-4xl mx-auto mt-5">Loading...</div>}>
@@ -73,6 +83,7 @@ export default function TopMovies() {
           {loading ? (
 
             <div className="loader mx-auto m-10"></div>
+           
 
           ) : (
             <>
@@ -107,8 +118,9 @@ export default function TopMovies() {
           <button
             className="bg-black hover:bg-gray-800 hover:bg-opacity-50 w-full p-1 px-5   rounded-xl   "
             onClick={() => {
+               
               changePage(page + 1);
-              scrollToSection();
+             scrollToSection();
             }}
           >
             Next
