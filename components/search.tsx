@@ -6,11 +6,17 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
+import { useRouter } from 'next/navigation';
 
-//======================================================================
+
+
+
 
   const Searchy = () => {
-   //=====================================================
+
+
+    const router = useRouter();
+
   
     const numberOfPages = 500;
     const [loading,setLoading]=useState<boolean>(true)
@@ -61,7 +67,7 @@ const filteredWords = filteredWords1.slice(0,4)
 
 //=====================================================
 
-//============================================search========================================================================\
+
 
 
 //===================================================================================================================\
@@ -80,11 +86,17 @@ const filteredWords = filteredWords1.slice(0,4)
             value={searchValue}
             onChange={(e)=>setSearchValue(e.target.value)}  
             onClick={()=>setOnSearch(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && searchValue.trim()) {
+                setOnSearch(false);
+                router.push(`/movies/search/${searchValue.trim()}`);
+              }
+            }}
             />  
        
    
             <button onClick={() => {
-                    if (!searchValue) return; // تحقق من أن searchValue ليس فارغًا
+                    if (!searchValue) return; 
                     setOnSearch(false);
                   }}>
                     {searchValue ? (

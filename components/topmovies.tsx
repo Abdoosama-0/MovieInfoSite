@@ -41,7 +41,8 @@ export default function TopMovies() {
 
   const changePage = (newPage: number) => {
     router.push(`?page=${newPage}`, { scroll: false });
-    setLoading(true);
+    setData(null); 
+  
   };
 
   useEffect(() => {

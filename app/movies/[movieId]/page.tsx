@@ -122,8 +122,8 @@ const [movie, setMovie] = useState<Movie | null>(null);
               
                                   </div>
                             </div>
-                              <div className='bg-slate-950  py-4 px-6 rounded-2xl flex flex-col justify-center w-full hover:bg-slate-800 hover:bg-opacity-50 cursor-pointer '>
-                                <h1 onClick={scrollToSection} className='text-3xl text-white w-fit font-serif'>trailer</h1>
+                              <div  onClick={scrollToSection}  className='bg-slate-950  py-4 px-6 rounded-2xl flex flex-col justify-center w-full hover:bg-slate-800 hover:bg-opacity-50 cursor-pointer '>
+                                <h1 className='text-3xl text-white w-fit font-serif'>trailer</h1>
                               </div>
                           
                         </div>
