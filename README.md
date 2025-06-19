@@ -6,7 +6,7 @@ real-time average score calculation.
 🔹built using **Next.js**, **TypeScript**,  **Tailwind CSS**, and **React**.
 ## 🔗 Live Site
 
-👉 [Click here to view the live site](https://movie-lovers-site-cvmd.vercel.app/)
+👉 [Click here to view the live site](https://movieinfosite-production.up.railway.app/)
 ## Demo Screenshots
 
 ![Demo Screenshot](https://i.imgur.com/A0iRfsn.png)  
