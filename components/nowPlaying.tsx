@@ -6,134 +6,128 @@ import MovieCard from "./moviecard";
 
 
 
-//=================================================================================================
+type Movie = {
+  id: number;
+  poster_path: string;
+  title: string;
+};
 
+type MovieData = Movie[]; // Array of movie objects
 
-
-
-//==================================================fetch object===============================================
-
-interface MovieData {
- 
-  results: Array<{
-    id: number;
-    poster_path: string;
-    title: string;
-  }>;
-  
-  }
-  
 
 
 export default function NowPlaying() {
-  const [data,setData]=useState<MovieData>({ results: [] })
-  const [loading,setLoading]=useState<boolean>(true)
+  const [data, setData] = useState<MovieData>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [startIndex, setStartIndex] = useState<number>(0);
+  const [itemsPerPage, setItemsPerPage] = useState(2);
+  const visibleItems = 6;
 
+  const fetchData = async () => {
+    try {
+      const res = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=caa8300bc818e7643ea53ed6f19509f7`)
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.message)
+        return
+      }
+
+      setData(data.results);
+
+
+
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=caa8300bc818e7643ea53ed6f19509f7`)  
-    .then((res) => res.json())
-    .then((data) => {
-      setData(data);
-      setLoading(false);
-    });
-
-  },[])
-const movies =data.results
-
-  //=================================================العناصر التى سوف تعرض================================================
-  const [startIndex, setStartIndex] = useState<number>(0);
- 
-  const visibleItems = 6;
-  
-
-  //===============================================================
-  
-// دالة لجلب العناصر الحالية مع إعادة التدوير
-const getVisibleMovies = () => {
-  const endIndex = startIndex + visibleItems;
-
-  return endIndex <= movies.length
-    ? movies.slice(startIndex, endIndex) // الحالة العادية
-    : [...movies.slice(startIndex), ...movies.slice(0, endIndex % movies.length)]; // عند تجاوز النهاية، يتم الدمج مع البداية
-};
-
-const handleNext = () => {
-  setStartIndex((prevIndex) => (prevIndex + visibleItems) % movies.length);
-};
-
-const handlePrevious = () => {
-  setStartIndex((prevIndex) => (prevIndex - visibleItems + movies.length) % movies.length);
-};
-//=================================================================================================
-useEffect(() => {
-  if (movies.length <= visibleItems) return; // لا تجعل المؤقت يعمل إذا لم يكن هناك عدد كافٍ من الأفلام
-
-  const interval = setInterval(() => {
-    setStartIndex((prevIndex) => (prevIndex + visibleItems) % movies.length);
-  }, 4000);
-
-  return () => clearInterval(interval);
-}, [movies.length, visibleItems]); 
-
-//=================================================================================================
+    fetchData();
+  }, [])
 
 
-const [itemsPerPage, setItemsPerPage] = useState(2);
 
-useEffect(() => {
-  const updateItemsPerPage = () => {
-    if (window.innerWidth >= 1024) {
-      setItemsPerPage(6); // شاشات كبيرة
-    } else if (window.innerWidth >= 768) {
-      setItemsPerPage(3); // شاشات متوسطة
-    } else {
-      setItemsPerPage(2); // شاشات صغيرة
-    }
+
+
+
+  //=================================================================================================
+
+  const getVisibleMovies = () => {
+    const endIndex = startIndex + visibleItems;
+
+    return endIndex <= data.length
+      ? data.slice(startIndex, endIndex) // الحالة العادية
+      : [...data.slice(startIndex), ...data.slice(0, endIndex % data.length)]; // عند تجاوز النهاية، يتم الدمج مع البداية
   };
 
-  updateItemsPerPage(); // تشغيل عند التحميل
-  window.addEventListener("resize", updateItemsPerPage);
+  const handleNext = () => {
+    setStartIndex((prevIndex) => (prevIndex + visibleItems) % data.length);
+  };
 
-  return () => window.removeEventListener("resize", updateItemsPerPage);
-}, []);
+  const handlePrevious = () => {
+    setStartIndex((prevIndex) => (prevIndex - visibleItems + data.length) % data.length);
+  };
+  //=================================================================================================
+ 
+  useEffect(() => {
+    const updateItemsPerPage = () => {
+      if (window.innerWidth >= 1024) {
+        setItemsPerPage(6);
+      } else if (window.innerWidth >= 768) {
+        setItemsPerPage(3);
+      } else {
+        setItemsPerPage(2);
+      }
+    };
+    updateItemsPerPage();
+
+    window.addEventListener("resize", updateItemsPerPage); //كل ما المستخدم يغير حجم نافذة المتصفح (يكبر أو يصغر)، نفذ الدالة updateItemsPerPage
+    return () => window.removeEventListener("resize", updateItemsPerPage);// إزالة المستمع (listener) لما ميبقاش محتاجه   *(cleanup function)*
+  }, []);
+  //=================================================================================================
 
 
 
-return (
 
 
-  
-<div className="flex flex-col  bg-slate-700 bg-opacity-50 border-4 p-5  rounded-2xl space-y-2 mb-3">
-    
+  return (
+
+
+
+    <div className="flex flex-col  bg-slate-700 bg-opacity-50 border-4 p-5  rounded-2xl space-y-2 mb-3">
+
       <h1 className="text-white font-bold text-4xl border-b-4 p-2 ml-4 ">now playing</h1>
 
-  
-    {loading? ( <div className="loader mx-auto m-10"></div>):(
-      <div className="flex flex-row gap-1 w-full justify-between items-center"> 
+
+      {loading ? (<div className="loader mx-auto m-10"></div>) : (
+        <div className="flex flex-row gap-1 w-full justify-between items-center">
           <button onClick={handlePrevious} className="text-white  h-full">◀</button>
-      
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 justify-center w-full   mb-4  h-fit">
 
-            
-              
-            {getVisibleMovies().slice(0,itemsPerPage).map((result,index)=>(//0 to 6  => 0 1 2 3 4 5 =>6 items >>>>>> 6 ,12 =>  6 7 8  9 10 11 
-            <span key={index}>
-                      <MovieCard
-                      image={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
-                      title={result.title}
-                      id={result.id}
-                      />
-                      </span>
-                    )
-            )}  
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 justify-center w-full   mb-4  h-fit">
+
+
+
+            {getVisibleMovies().slice(0, itemsPerPage).map((result, index) => (//0 to 6  => 0 1 2 3 4 5 =>6 items >>>>>> 6 ,12 =>  6 7 8  9 10 11 
+              <span key={index}>
+                <MovieCard
+                  image={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
+                  title={result.title}
+                  id={result.id}
+                />
+              </span>
+            )
+            )}
+          </div>
+
+          <button onClick={handleNext} className="text-white  h-full ">▶</button>
+
         </div>
+      )}
 
-      <button onClick={handleNext} className="text-white  h-full ">▶</button>
-    
-      </div>
-  )}
-    
     </div>
   );
 }
