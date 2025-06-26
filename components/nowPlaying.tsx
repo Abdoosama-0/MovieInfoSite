@@ -21,7 +21,7 @@ export default function NowPlaying() {
   const [loading, setLoading] = useState<boolean>(true)
   const [startIndex, setStartIndex] = useState<number>(0);
   const [itemsPerPage, setItemsPerPage] = useState(2);
-  const visibleItems = 6;
+
 
   const fetchData = async () => {
     try {
@@ -56,7 +56,8 @@ export default function NowPlaying() {
 
   //=================================================================================================
 
-  const getVisibleMovies = () => {
+  const getVisibleMovies = (visibleItems:number) => {
+    
     const endIndex = startIndex + visibleItems;
 
     return endIndex <= data.length
@@ -65,11 +66,11 @@ export default function NowPlaying() {
   };
 
   const handleNext = () => {
-    setStartIndex((prevIndex) => (prevIndex + visibleItems) % data.length);
+    setStartIndex((prevIndex) => (prevIndex + itemsPerPage) % data.length);
   };
 
   const handlePrevious = () => {
-    setStartIndex((prevIndex) => (prevIndex - visibleItems + data.length) % data.length);
+    setStartIndex((prevIndex) => (prevIndex - itemsPerPage + data.length) % data.length);
   };
   //=================================================================================================
  
@@ -111,7 +112,7 @@ export default function NowPlaying() {
 
 
 
-            {getVisibleMovies().slice(0, itemsPerPage).map((result, index) => (//0 to 6  => 0 1 2 3 4 5 =>6 items >>>>>> 6 ,12 =>  6 7 8  9 10 11 
+            {getVisibleMovies(itemsPerPage).map((result, index) => (//0 to 6  => 0 1 2 3 4 5 =>6 items >>>>>> 6 ,12 =>  6 7 8  9 10 11 
               <span key={index}>
                 <MovieCard
                   image={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
