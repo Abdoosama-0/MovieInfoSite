@@ -28,7 +28,7 @@ export default function NowPlaying() {
       const res = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=caa8300bc818e7643ea53ed6f19509f7`)
       const data = await res.json();
       if (!res.ok) {
-        alert(data.message)
+        alert(data.message|| "Failed to fetch data");
         return
       }
 
@@ -46,35 +46,6 @@ export default function NowPlaying() {
   }
 
   useEffect(() => {
-    fetchData();
-  }, [])
-
-
-
-
-
-
-  //=================================================================================================
-
-  const getVisibleMovies = (visibleItems:number) => {
-    
-    const endIndex = startIndex + visibleItems;
-
-    return endIndex <= data.length
-      ? data.slice(startIndex, endIndex) // الحالة العادية
-      : [...data.slice(startIndex), ...data.slice(0, endIndex % data.length)]; // عند تجاوز النهاية، يتم الدمج مع البداية
-  };
-
-  const handleNext = () => {
-    setStartIndex((prevIndex) => (prevIndex + itemsPerPage) % data.length);
-  };
-
-  const handlePrevious = () => {
-    setStartIndex((prevIndex) => (prevIndex - itemsPerPage + data.length) % data.length);
-  };
-  //=================================================================================================
- 
-  useEffect(() => {
     const updateItemsPerPage = () => {
       if (window.innerWidth >= 1024) {
         setItemsPerPage(6);
@@ -85,10 +56,54 @@ export default function NowPlaying() {
       }
     };
     updateItemsPerPage();
-
+    fetchData();
     window.addEventListener("resize", updateItemsPerPage); //كل ما المستخدم يغير حجم نافذة المتصفح (يكبر أو يصغر)، نفذ الدالة updateItemsPerPage
     return () => window.removeEventListener("resize", updateItemsPerPage);// إزالة المستمع (listener) لما ميبقاش محتاجه   *(cleanup function)*
-  }, []);
+  
+   
+  }, [])
+
+
+const [movies, setMovies] = useState<MovieData>([])
+
+useEffect(() => {
+    const getVisibleMovies = (visibleItems:number) => {
+    
+    const endIndex = startIndex + visibleItems;
+      if(endIndex <= data.length)
+        { 
+        
+            setMovies(data.slice(startIndex, endIndex));
+         }
+    else{
+       setMovies([...data.slice(startIndex), ...data.slice(0, endIndex % data.length)]);
+    }
+     
+  };
+    getVisibleMovies(itemsPerPage);
+}, [itemsPerPage,startIndex,data]); 
+
+  //=================================================================================================
+
+  // const getVisibleMovies = (visibleItems:number) => {
+    
+  //   const endIndex = startIndex + visibleItems;
+
+  //   return endIndex <= data.length
+  //     ? data.slice(startIndex, endIndex) // الحالة العادية
+  //     : [...data.slice(startIndex), ...data.slice(0, endIndex % data.length)]; // عند تجاوز النهاية، يتم الدمج مع البداية
+  // };
+
+  const handleNext = () => {
+    setStartIndex((prevIndex) => (prevIndex + itemsPerPage) % data.length);
+  };
+
+  const handlePrevious = () => {
+    setStartIndex((prevIndex) => (prevIndex - itemsPerPage + data.length) % data.length);
+  };
+  //=================================================================================================
+ 
+
   //=================================================================================================
 
 
@@ -99,12 +114,16 @@ export default function NowPlaying() {
 
 
 
-    <div className="flex flex-col  bg-slate-700 bg-opacity-50 border-4 p-5  rounded-2xl space-y-2 mb-3">
+    <div className="flex flex-col  bg-slate-700 bg-opacity-50 border-4 p-5  rounded-2xl space-y-2 mb-3 min-h-[300px]">
 
-      <h1 className="text-white font-bold text-4xl border-b-4 p-2 ml-4 ">now playing</h1>
+      <h1 className="flex border-b-4 text-4xl font-serif text-white p-2 shadow-lg">now playing</h1>
 
 
-      {loading ? (<div className="loader mx-auto m-10"></div>) : (
+      {loading ? (
+        <div className="loader mx-auto ">
+
+      </div>
+      ) : (
         <div className="flex flex-row gap-1 w-full justify-between items-center">
           <button onClick={handlePrevious} className="text-white  h-full">◀</button>
 
@@ -112,7 +131,7 @@ export default function NowPlaying() {
 
 
 
-            {getVisibleMovies(itemsPerPage).map((result, index) => (//0 to 6  => 0 1 2 3 4 5 =>6 items >>>>>> 6 ,12 =>  6 7 8  9 10 11 
+            {movies.map((result, index) => (
               <span key={index}>
                 <MovieCard
                   image={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
