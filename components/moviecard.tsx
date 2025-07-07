@@ -23,6 +23,8 @@ const MovieCard = ({ image, title, quality,id }: MovieCardProps) => {
             src={image || "https://www.shutterstock.com/image-vector/no-image-available-icon-260nw-1069066466.jpg"}
             alt={title} 
             fill 
+            sizes={"200px"}
+            priority 
             className="object-cover" 
           />
           </div>
