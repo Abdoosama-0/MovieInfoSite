@@ -20,7 +20,7 @@ const MovieCard = ({ image, title, quality,id }: MovieCardProps) => {
         {/* الصورة */}
         <div className="relative w-full h-full">
           <Image 
-            src={image} 
+            src={image || "https://www.shutterstock.com/image-vector/no-image-available-icon-260nw-1069066466.jpg"}
             alt={title} 
             fill 
             className="object-cover" 

@@ -16,12 +16,8 @@ export default function NowPlaying() {
   const [startIndex, setStartIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(2);
 
-  const updateItemsPerPage = useCallback(() => {
-    const width = window.innerWidth;
-    setItemsPerPage(width >= 1024 ? 6 : width >= 768 ? 3 : 2);
-  }, []);
 
-  const fetchMovies = useCallback(async () => {
+  const fetchMovies = async () => {
     try {
       const res = await fetch(
         "https://api.themoviedb.org/3/movie/now_playing?api_key=caa8300bc818e7643ea53ed6f19509f7"
@@ -39,20 +35,24 @@ export default function NowPlaying() {
     } finally {
       setLoading(false);
     }
-  }, []);
-
-  // Fetch data & handle resize once on mount
+  }
+  
+  const updateItemsPerPage = () => {
+    const width = window.innerWidth;
+    setItemsPerPage(width >= 1024 ? 6 : width >= 768 ? 3 : 2);
+  };
   useEffect(() => {
     updateItemsPerPage();
     fetchMovies();
 
     window.addEventListener("resize", updateItemsPerPage);
     return () => window.removeEventListener("resize", updateItemsPerPage);
-  }, [updateItemsPerPage, fetchMovies]);
+  }, []);
 
-  // Update visible movies
+ 
   useEffect(() => {
     if (movies.length === 0) return;
+    
 
     const endIndex = startIndex + itemsPerPage;
     const sliced =
@@ -74,8 +74,9 @@ export default function NowPlaying() {
   return (
     <div className="flex flex-col bg-slate-700 bg-opacity-50 border-4 p-5 rounded-2xl space-y-2 mb-3 min-h-[300px]">
       <h1 className="flex border-b-4 text-4xl font-serif text-white p-2 shadow-lg">
-        now playing
+        <div className="flex justify-between items-center  w-full">now playing <p className="text-sm  text-white text-opacity-50">{itemsPerPage}</p></div>
       </h1>
+    
 
       {loading ? (
         <div className="loader mx-auto" />
@@ -101,6 +102,7 @@ export default function NowPlaying() {
           </button>
         </div>
       )}
+
     </div>
   );
 }
