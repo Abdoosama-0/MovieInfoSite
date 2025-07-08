@@ -41,30 +41,53 @@ export default function TopMovies() {
 
   const changePage = (newPage: number) => {
     router.push(`?page=${newPage}`, { scroll: false });
-   
-   
-  
+
+
+
   };
 
   const fetchMovies = async (page: number) => {
-     fetch(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=caa8300bc818e7643ea53ed6f19509f7&language=en-US&page=${page}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      });
+
+      const cacheKey = `topRated-${page}`;
+  const cached = sessionStorage.getItem(cacheKey);
+
+  if (cached) {
+    setData(JSON.parse(cached));
+    setLoading(false);
+    return;
+  }
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=caa8300bc818e7643ea53ed6f19509f7&language=en-US&page=${page}`
+      )
+      const data = await res.json();
+      console.log("Fetched data1:");
+      if (!res.ok) {
+        alert(data.message || "Failed to fetch data");
+        return;
+      }
+
+      setData(data);
+       sessionStorage.setItem(cacheKey, JSON.stringify(data));
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+      alert("Failed to fetch data. Please try again later.");
+
+
+    } finally {
+      setLoading(false);
+    }
 
   }
 
-useEffect(() => {
-  setLoading(true);
+
+  useEffect(() => {
+    setLoading(true);
 
     fetchMovies(page);
 
 
-}, [page]);
+  }, [page]);
 
   const scrollToSection = () => {
     targetRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -80,16 +103,16 @@ useEffect(() => {
         </Suspense>
 
         {/* <div className="flex flex-row flex-wrap bg-orange-500 m-2"> */}
-          {loading ? (
+        {loading ? (
 
-            <div className="loader mx-auto m-10"></div>
-           
+          <div className="loader mx-auto m-10"></div>
 
-          ) : (
-            <>
+
+        ) : (
+          <>
             <div className=" m-2 flex-wrap
             grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3"> {/**movies */}
-   
+
 
               {data &&
                 data.results.map((movie, index) => (
@@ -103,34 +126,34 @@ useEffect(() => {
                   </span>
                 ))}
             </div>
-  <div className="flex flex-row justify-center  w-[80%] md:w-fit mx-auto p-4   space-x-2 mt-4 mb-8 text-white font-bold text-xl">
-          {page > 1 && (
-            <button 
-              className="bg-black hover:bg-gray-800 hover:bg-opacity-50 w-full p-1 px-5  rounded-xl  "
-              onClick={() => {
-                changePage(page - 1);
-                scrollToSection();
-              }}
-            >
-              Previous
-            </button>
-          )}
-          <button
-            className="bg-black hover:bg-gray-800 hover:bg-opacity-50 w-full p-1 px-5   rounded-xl   "
-            onClick={() => {
-               
-              changePage(page + 1);
-             scrollToSection();
-            }}
-          >
-            Next
-          </button>
-        </div>
-            </>
-          )}
+            <div className="flex flex-row justify-center  w-[80%] md:w-fit mx-auto p-4   space-x-2 mt-4 mb-8 text-white font-bold text-xl">
+              {page > 1 && (
+                <button
+                  className="bg-black hover:bg-gray-800 hover:bg-opacity-50 w-full p-1 px-5  rounded-xl  "
+                  onClick={() => {
+                    changePage(page - 1);
+                    scrollToSection();
+                  }}
+                >
+                  Previous
+                </button>
+              )}
+              <button
+                className="bg-black hover:bg-gray-800 hover:bg-opacity-50 w-full p-1 px-5   rounded-xl   "
+                onClick={() => {
+
+                  changePage(page + 1);
+                  scrollToSection();
+                }}
+              >
+                Next
+              </button>
+            </div>
+          </>
+        )}
         {/* </div> */}
 
-      
+
       </div>
     </div>
   );

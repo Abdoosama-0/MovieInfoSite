@@ -98,9 +98,11 @@ export default function Movie() {
             <Image
               src={`https://image.tmdb.org/t/p/w500/${movie && movie.poster_path}`} // تأكد من أن الصورة موجودة في المجلد public 
               alt="movie"
-              layout="fill" // يجعل الصورة تملأ الـ div بالكامل
-              objectFit="cover"// يحافظ على تناسب الصورة ويملأ الحاوية
-              className="object-cover "
+              fill
+              priority
+              sizes="300px"
+            className="object-cover"
+             
             />
           </div>
 
@@ -179,6 +181,7 @@ export default function Movie() {
                       }
                       alt={actor.name}
                       fill
+                      priority
                       className="object-cover rounded-full"
                       sizes="96px" 
                     />

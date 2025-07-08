@@ -18,7 +18,16 @@ export default function NowPlaying() {
 
 
   const fetchMovies = async () => {
+
+    const cached = sessionStorage.getItem("nowPlaying");
+    if (cached) {
+      setMovies(JSON.parse(cached));
+      setLoading(false);
+      return;
+    }
     try {
+
+      console.log("Fetched data2:");
       const res = await fetch(
         "https://api.themoviedb.org/3/movie/now_playing?api_key=caa8300bc818e7643ea53ed6f19509f7"
       );
@@ -30,13 +39,14 @@ export default function NowPlaying() {
       }
 
       setMovies(data.results);
+      sessionStorage.setItem("nowPlaying", JSON.stringify(data.results));
     } catch (err) {
       console.error("Error fetching movies:", err);
     } finally {
       setLoading(false);
     }
   }
-  
+
   const updateItemsPerPage = () => {
     const width = window.innerWidth;
     setItemsPerPage(width >= 1024 ? 6 : width >= 768 ? 3 : 2);
@@ -49,10 +59,10 @@ export default function NowPlaying() {
     return () => window.removeEventListener("resize", updateItemsPerPage);
   }, []);
 
- 
+
   useEffect(() => {
     if (movies.length === 0) return;
-    
+
 
     const endIndex = startIndex + itemsPerPage;
     const sliced =
@@ -76,7 +86,7 @@ export default function NowPlaying() {
       <h1 className="flex border-b-4 text-4xl font-serif text-white p-2 shadow-lg">
         <div className="flex justify-between items-center  w-full">now playing <p className="text-sm  text-white text-opacity-50">{itemsPerPage}</p></div>
       </h1>
-    
+
 
       {loading ? (
         <div className="loader mx-auto" />
