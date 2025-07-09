@@ -29,7 +29,7 @@ export default function NowPlaying() {
 
       console.log("Fetched data2:");
       const res = await fetch(
-        "https://api.themoviedb.org/3/movie/now_playing?api_key=caa8300bc818e7643ea53ed6f19509f7"
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
       );
       const data = await res.json();
 

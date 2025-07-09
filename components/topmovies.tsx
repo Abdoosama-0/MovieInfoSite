@@ -57,8 +57,9 @@ export default function TopMovies() {
     return;
   }
     try {
+     
       const res = await fetch(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=caa8300bc818e7643ea53ed6f19509f7&language=en-US&page=${page}`
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=${page}`
       )
       const data = await res.json();
       console.log("Fetched data1:");
