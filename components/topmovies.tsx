@@ -64,7 +64,7 @@ export default function TopMovies() {
       const data = await res.json();
       console.log("Fetched data1:");
       if (!res.ok) {
-        alert("Failed to fetch data :"+ process.env.NEXT_PUBLIC_API_KEY );
+        alert(data.message ||"Failed to fetch data" );
         return;
       }
 
