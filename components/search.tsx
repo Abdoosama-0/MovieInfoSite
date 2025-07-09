@@ -4,7 +4,7 @@ import { Search } from 'lucide-react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation';
 
@@ -29,10 +29,8 @@ const Searchy = () => {
 
   const [data, setData] = useState<Movie[]>([]);
   const fetchMovies = async () => {
-   if(data.length > 0){
-
-    return} ; 
-    const requests = Array.from({ length: numberOfPages }, (_, i) =>
+   if(data.length > 0)return
+        const requests = Array.from({ length: numberOfPages }, (_, i) =>
       fetch(
         `https://api.themoviedb.org/3/movie/top_rated?api_key=caa8300bc818e7643ea53ed6f19509f7&language=en-US&page=${i + 1
         }`
@@ -48,8 +46,11 @@ const Searchy = () => {
 
 
   const pathname = usePathname();
-
+useEffect(() => {
+ fetchMovies();
+}, []);
   useEffect(() => {
+   
     setSearchValue(""); // إعادة تعيين القيمة عند تغيير الـ URL
   }, [pathname]); // يتم تنفيذ `useEffect` عند تغيير `as
 
@@ -197,7 +198,7 @@ const Searchy = () => {
           {searchValue && onSearch && (
             loading ? (
               <div className={`absolute top-[3rem] mt-2  flex items-center justify-center  z-20 w-[95%] h-[20rem]  rounded-2xl bg-white `}>
-                <h1 className='font-bold text-3xl text-black '>🧊loading...🧊</h1>
+                <h1 className='font-bold text-3xl text-black '>🧊loading...</h1>
               </div>
             ) : (
               <div className='top-[3rem] mt-2  w-[95%] absolute    z-20   rounded-2xl bg-white h-[31rem] overflow-y-auto'>
