@@ -30,7 +30,7 @@ const Searchy = () => {
   const [data, setData] = useState<Movie[]>([]);
   const fetchMovies = async () => {
    if(data.length > 0){
-    //  setLoading(false)
+
     return} ; 
     const requests = Array.from({ length: numberOfPages }, (_, i) =>
       fetch(
