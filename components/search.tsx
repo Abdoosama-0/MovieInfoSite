@@ -109,7 +109,7 @@ const Searchy = () => {
         {searchValue && onSearch && (
           loading ? (
             <div className={`absolute left-auto top-[3rem] mt-2  flex items-center justify-center  z-20 w-[100%] h-[20rem]  rounded-2xl bg-white `}>
-              <h1 className='font-bold text-3xl text-black '>loading...</h1>
+              <h1 className='font-bold text-3xl text-black '>🧊loading...</h1>
             </div>
           ) : (
 
