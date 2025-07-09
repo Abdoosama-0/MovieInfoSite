@@ -18,7 +18,7 @@ const Searchy = () => {
   const router = useRouter();
 
 
-  const numberOfPages = 500;
+  const numberOfPages = 3;
   const [loading, setLoading] = useState<boolean>(true)
 
   interface Movie {
