@@ -19,7 +19,7 @@ const Searchy = () => {
 
 
   const numberOfPages = 500;
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
 
   interface Movie {
     id: number;
@@ -29,9 +29,9 @@ const Searchy = () => {
 
   const [data, setData] = useState<Movie[]>([]);
   const fetchMovies = async () => {
-  //  if(data.length > 0){
+   if(data.length > 0){
     //  setLoading(false)
-    //  return} ; 
+    return} ; 
     const requests = Array.from({ length: numberOfPages }, (_, i) =>
       fetch(
         `https://api.themoviedb.org/3/movie/top_rated?api_key=caa8300bc818e7643ea53ed6f19509f7&language=en-US&page=${i + 1
