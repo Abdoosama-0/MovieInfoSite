@@ -28,12 +28,7 @@ const Searchy = () => {
   }
 
   const [data, setData] = useState<Movie[]>([]);
-
-
-
-  const pathname = usePathname();
-useEffect(() => {
-    const fetchMovies = async () => {
+  const fetchMovies = async () => {
    if(data.length > 0)return
         const requests = Array.from({ length: numberOfPages }, (_, i) =>
       fetch(
@@ -45,13 +40,14 @@ useEffect(() => {
     const results = await Promise.all(requests);
     const allMovies = results.flatMap((res) => res.results || []);
     setData(allMovies);
-    setLoading(true)
+    setLoading(false)
 
   };
- fetchMovies();
-}, []);
+
+
+  const pathname = usePathname();
+
   useEffect(() => {
-   
     setSearchValue(""); // إعادة تعيين القيمة عند تغيير الـ URL
   }, [pathname]); // يتم تنفيذ `useEffect` عند تغيير `as
 
@@ -85,7 +81,7 @@ useEffect(() => {
           placeholder='search for a movie' type="text "
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          onClick={() => {  setOnSearch(true) }}
+          onClick={() => { fetchMovies(); setOnSearch(true) }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && searchValue.trim()) {
               setOnSearch(false);
@@ -191,7 +187,7 @@ useEffect(() => {
             placeholder='search for a movie' type="text "
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            onClick={() => setOnSearch(true)}
+            onClick={() => {fetchMovies(); setOnSearch(true)}}
           />
 
 
@@ -199,7 +195,7 @@ useEffect(() => {
           {searchValue && onSearch && (
             loading ? (
               <div className={`absolute top-[3rem] mt-2  flex items-center justify-center  z-20 w-[95%] h-[20rem]  rounded-2xl bg-white `}>
-                <h1 className='font-bold text-3xl text-black '>00loading...</h1>
+                <h1 className='font-bold text-3xl text-black '>🧊loading...</h1>
               </div>
             ) : (
               <div className='top-[3rem] mt-2  w-[95%] absolute    z-20   rounded-2xl bg-white h-[31rem] overflow-y-auto'>
