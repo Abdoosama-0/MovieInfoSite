@@ -19,7 +19,7 @@ const Searchy = () => {
 
 
   const numberOfPages = 500;
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
 
   interface Movie {
     id: number;
