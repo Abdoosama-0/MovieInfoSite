@@ -29,7 +29,9 @@ const Searchy = () => {
 
   const [data, setData] = useState<Movie[]>([]);
   const fetchMovies = async () => {
-    if(data.length > 0) return; 
+    if(data.length > 0){
+      setLoading(false)
+      return} ; 
     const requests = Array.from({ length: numberOfPages }, (_, i) =>
       fetch(
         `https://api.themoviedb.org/3/movie/top_rated?api_key=caa8300bc818e7643ea53ed6f19509f7&language=en-US&page=${i + 1
