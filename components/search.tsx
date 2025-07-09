@@ -4,7 +4,7 @@ import { Search } from 'lucide-react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation';
 
@@ -28,7 +28,12 @@ const Searchy = () => {
   }
 
   const [data, setData] = useState<Movie[]>([]);
-  const fetchMovies = async () => {
+
+
+
+  const pathname = usePathname();
+useEffect(() => {
+    const fetchMovies = async () => {
    if(data.length > 0)return
         const requests = Array.from({ length: numberOfPages }, (_, i) =>
       fetch(
@@ -43,10 +48,6 @@ const Searchy = () => {
     setLoading(true)
 
   };
-
-
-  const pathname = usePathname();
-useEffect(() => {
  fetchMovies();
 }, []);
   useEffect(() => {
@@ -84,7 +85,7 @@ useEffect(() => {
           placeholder='search for a movie' type="text "
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          onClick={() => { fetchMovies(); setOnSearch(true) }}
+          onClick={() => {  setOnSearch(true) }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && searchValue.trim()) {
               setOnSearch(false);
